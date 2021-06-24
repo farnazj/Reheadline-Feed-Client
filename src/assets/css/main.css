@@ -1,0 +1,138 @@
+.interactable {
+  cursor: pointer;
+}
+
+.frozen {
+  position: fixed !important;
+}
+
+.transitive {
+  opacity: 0.5;
+}
+
+.light-grey-background {
+  background-color: #fafafa !important;
+}
+/*
+body.dialog-is-open {
+  overflow-y: hidden !important;
+  max-height: 100%;
+  position: fixed;
+} */
+
+.break-word {
+  word-break: break-word !important;
+}
+
+.dashed-border {
+  border-style: dashed !important;
+}
+
+div.vicp-preview {
+  width: 170px !important;
+  height: 270px !important;
+}
+
+div.vicp-preview-item.vicp-preview-item-circle {
+  width: 170px !important;
+  height: 170px !important;
+}
+
+.vicp-preview-item.vicp-preview-item-circle img {
+  width: 160px !important;
+  height: 160px !important;
+}
+
+.vicp-preview-item.vicp-preview-item-circle span {
+  bottom: -30px !important;
+}
+
+.vue-image-crop-upload .vicp-wrap {
+  max-width: 600px;
+  width: initial !important;
+}
+
+@media (max-width: 470px) {
+  .vue-image-crop-upload .vicp-wrap {
+    height: 530px !important;
+  }
+}
+
+/* .v-list__group__header--active .v-list__group__header__append-icon .v-icon,
+.v-list__group__header--active.v-list__group__header--sub-group .v-list__group__header__prepend-icon .v-icon {
+  -webkit-transform: rotate(-90deg) !important;
+  transform: rotate(-90deg) !important;
+} */
+
+.source-checkbox .accent--text  {
+  color: #1976D2 !important;
+  caret-color: #1976D2 !important;
+}
+
+
+.article-filters .v-list__tile {
+
+}
+
+.v-list-item__action:last-of-type:not(:only-child), .v-list-item__icon:last-of-type:not(:only-child) {
+  margin-left: 0 !important;
+}
+
+.v-list-group--no-action.v-list-group--sub-group > .v-list-group__items > div > .v-list-item {
+  padding-left: 72px !important;
+}
+
+.v-badge__badge {
+  -padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.article-inner-img {
+  max-width: 100% !important;
+}
+
+.xs-icon-font {
+  font-size: 1.3em !important;
+}
+
+.parent-height {
+  height: 100% !important;
+}
+
+.full-height {
+  height: 100vh !important;
+}
+
+.flex-parent {
+  display: -webkit-box !important;
+  display: -moz-box !important;
+  display: -ms-flexbox !important;
+  display: -moz-flex !important;
+  display: -webkit-flex !important;
+  display: flex !important;
+
+  flex-direction: column !important;
+  height: 100% !important;
+}
+
+.flex-fixed-height-child {
+  flex: 0 0 auto !important;
+}
+
+.no-break-word {
+  word-break: initial !important;
+}
+
+.custom-list-avatar {
+  overflow: initial !important;
+}
+
+.v-radio > .v-label {
+  max-width: 100%;
+}
+
+.v-badge__badge .v-icon {
+  font-size: 17px !important;
+  inset: calc(100% - 14px) auto auto calc(100% - 14px);
+  color: #827717  !important;
+}
