@@ -23,7 +23,7 @@
          </v-col>
          <v-col cols="1">
            <v-row no-gutters justify="end">
-             <v-icon @click="titleDialogVisible = false">clear</v-icon>
+             <v-icon @click="titleDialogVisible = false">{{icons.clear}}</v-icon>
            </v-row>
          </v-col>
        </v-row>
@@ -77,13 +77,13 @@
 
             <v-row no-gutters class="py-1">
               <v-col cols="1">
-                <v-icon @click="changeEndorsement(titleObj, index, false)"
+                <v-icon @click="changeEndorsement(titleObj, index, false)" small
                 v-if="titleObj.userEndorsed" color="primary" class="xs-icon-font interactable">
-                  fas fa-thumbs-up
+                   {{icons.thumbUpFilled}}
                 </v-icon>
-                <v-icon @click="changeEndorsement(titleObj, index, true)" v-else
+                <v-icon @click="changeEndorsement(titleObj, index, true)" v-else small
                 color="primary" class="xs-icon-font interactable">
-                  far fa-thumbs-up
+                  {{icons.thumbUpOutline}}
                 </v-icon>
               </v-col>
 
@@ -170,6 +170,7 @@ import timeHelpers from '@/mixins/timeHelpers'
 import titleHelpers from '@/mixins/titleHelpers'
 import titleServices from '@/services/titleServices'
 import { mapState, mapGetters, mapActions } from 'vuex'
+import { mdiWindowClose, mdiThumbUpOutline, mdiThumbUp } from '@mdi/js';
 
 export default {
   components: {
@@ -209,8 +210,12 @@ export default {
         ]
       },
       alert: false,
-      alertMessage: ''
-
+      alertMessage: '',
+      icons: {
+          clear: mdiWindowClose,
+          thumbUpOutline: mdiThumbUpOutline,
+          thumbUpFilled: mdiThumbUp
+        }
     }
   },
   computed: {
@@ -306,7 +311,12 @@ export default {
       .then(res => {
         titleServices.hasUserEndorsedTitle({ setId: titleObj.lastVersion.setId })
         .then(res => {
-          titleObj['userEndorsed'] = res.data;
+          // titleObj['userEndorsed'] = res.data;
+          if (endorsementVal)
+            this.addUserAsCustomTitleEndorser({ customTitleSetId: titleObj.lastVersion.setId });
+          else
+            this.removeUserAsCustomTitleEndorser({ customTitleSetId: titleObj.lastVersion.setId });
+
           this.fetchPostTitles();
         })
       })
@@ -366,6 +376,7 @@ export default {
           this.fetchPostTitles();
         })
         .catch(err => {
+          console.log(err)
           this.alertMessage = err.response.data.message;
           this.alert = true;
         })
@@ -421,8 +432,13 @@ export default {
       },
       setCustomTitleSetId (dispatch, payload) {
         return dispatch(this.titlesNamespace + '/setCustomTitleSetId', payload)
-      }
-
+      },
+      addUserAsCustomTitleEndorser (dispatch, payload) {
+        return dispatch(this.titlesNamespace + '/addUserAsCustomTitleEndorser', payload)
+      },
+      removeUserAsCustomTitleEndorser (dispatch, payload) {
+        return dispatch(this.titlesNamespace + '/removeUserAsCustomTitleEndorser', payload)
+      },
     })
   },
   mixins: [timeHelpers, titleHelpers]

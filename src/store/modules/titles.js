@@ -1,4 +1,5 @@
 import titleServices from '@/services/titleServices'
+import utils from '@/services/utils'
 
 export default {
   namespaced: true,
@@ -35,6 +36,7 @@ export default {
 
     populate_titles: (state, titles) => {
       state.titles = titles;
+      console.log('titles are', titles)
     },
 
     set_history_visibility: (state, visiblity) => {
@@ -56,6 +58,39 @@ export default {
     set_custom_title_set_id: (state, payload) => {
       state.selectedCustomTitleSetId = payload.selectedCustomTitleSetId;
     },
+
+    add_user_as_endorser: (state, payload) => {
+        
+   
+      let sortedCustomTitleIndex = state.titles.findIndex(customTitle => 
+          customTitle.lastVersion.setId == payload.customTitleSetId);
+              
+      let endorsedCustomTitle = state.titles[sortedCustomTitleIndex];
+      endorsedCustomTitle.lastVersion.Endorsers.push(payload.authUser);
+
+      state.titles[sortedCustomTitleIndex].userEndorsed = true;
+      state.titles[sortedCustomTitleIndex].sortedEndorsers = 
+          endorsedCustomTitle.lastVersion.Endorsers.slice().sort(utils.compareSources);
+
+    },
+
+    remove_user_as_endorser: (state, payload) => {
+        
+        let sortedCustomTitleIndex = state.titles.findIndex(customTitle => 
+            customTitle.lastVersion.setId == payload.customTitleSetId);
+                
+        let endorsedCustomTitle = state.titles[sortedCustomTitleIndex];
+        
+        let authUserIndex;
+        authUserIndex = endorsedCustomTitle.lastVersion.Endorsers.findIndex(endorser => endorser.id == payload.authUser.id);
+        endorsedCustomTitle.lastVersion.Endorsers.splice(authUserIndex, 1);
+
+        state.titles[sortedCustomTitleIndex].userEndorsed = false;
+
+        authUserIndex = state.titles[sortedCustomTitleIndex].sortedEndorsers.findIndex(endorser => 
+            endorser.id == payload.authUser.id)
+        state.titles[sortedCustomTitleIndex].sortedEndorsers.splice(authUserIndex, 1);
+    }
   },
   actions: {
     setPostTitleId: (context, payload) => {
@@ -114,6 +149,18 @@ export default {
 
     setCustomTitleSetId: (context, payload) => {
       context.commit('set_custom_title_set_id', payload);
+    },
+
+    addUserAsCustomTitleEndorser: (context, payload) => {
+      let authUser = context.rootGetters['auth/user'];
+      payload.authUser = authUser;
+      context.commit('add_user_as_endorser', payload);
+    },
+
+    removeUserAsCustomTitleEndorser: (context, payload) => {
+        let authUser = context.rootGetters['auth/user'];
+        payload.authUser = authUser;
+        context.commit('remove_user_as_endorser', payload);
     }
 
   }

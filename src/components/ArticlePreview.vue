@@ -135,6 +135,12 @@
     created() {
       this.arrangeTitles();
     },
+    watch: {
+      post: function(newVal) {
+        this.arrangeTitles();
+        this.populateTitles(this.titleObjects);
+      }
+    }, 
     mixins: [titleHelpers]
 
 }

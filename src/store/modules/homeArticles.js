@@ -42,11 +42,13 @@ export default {
     },
 
     update_titles: (state, payload) => {
+      console.log('goint to update tiltes', payload)
       let index = state.articles.findIndex(article => article.id == payload.postId);
 
       let articleCopy = Object.assign({}, state.articles[index]);
       articleCopy.StandaloneTitle = payload.standaloneTitle;
       Vue.set(state.articles, index, articleCopy);
+      console.log(state.articles, 'akharesh')
     }
 
   },
