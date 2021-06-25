@@ -1,7 +1,7 @@
 <template>
 
 <v-slide-x-reverse-transition v-if="visible">
-  <v-card max-width="270" max-height="50vh" class="drawer-card">
+  <v-card max-width="240" max-height="50vh" class="drawer-card">
     <v-row no-gutters >
       <v-col class="drawer-opener interactable" cols="1" @click="hideEndorsers">
         <v-row no-gutters justify="end" align="center" class="fill-height">

@@ -49,16 +49,14 @@
 
           <v-row no-gutters class="mt-1" justify="center">
             <v-col cols="6">
-              <v-btn outlined color="blue darken-1" block small
+              <v-btn outlined color="blue darken-1" block small @click="logEvent( { type: 'article visit', data: post.url })"
                 :href="post.url" target="_blank">
                  Visit Website</v-btn>
             </v-col>
           </v-row>
 
-          
         </v-card>
       </v-col>
-
 
     </v-row>
 
@@ -68,8 +66,8 @@
 <script>
   import initiatorDisplay from '@/components/InitiatorDisplay'
   import titleHelpers from '@/mixins/titleHelpers'
-  import utils from '@/services/utils'
-  import { mapState, mapActions } from 'vuex'
+  import studyHelpers from '@/mixins/studyHelpers'
+  import { mapState } from 'vuex'
 
   export default {
     components: {
@@ -126,9 +124,13 @@
       },
       showTitles: function() {
 
+        this.logEvent({ type: 'show_titles', data: this.post.StandaloneTitle.id });
         this.setPostTitleId({ postId: this.post.id, standaloneTitleId: this.post.StandaloneTitle ? this.post.StandaloneTitle.id : null });
         this.populateTitles(this.titleObjects);
         this.setTitlesVisibility(true);
+      }, 
+      sth: function() {
+        console.log('btn clicked')
       }
 
     },
@@ -141,7 +143,7 @@
         this.populateTitles(this.titleObjects);
       }
     }, 
-    mixins: [titleHelpers]
+    mixins: [titleHelpers, studyHelpers]
 
 }
 </script>

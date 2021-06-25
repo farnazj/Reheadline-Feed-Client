@@ -15,7 +15,7 @@
     <v-slide-x-reverse-transition>
 
      <v-card  class="pa-1 custom-titles-container-card" max-width="100%" max-height="50vh">
-       <v-row no-gutters align="center">
+       <v-row no-gutters align="center" class="dialog-custom-row">
          <v-col cols="11">
            <v-row no-gutters justify="start">
              <p class="pb-0 mb-0 subheading font-weight-regular">Alternative Titles</p>
@@ -30,7 +30,7 @@
 
        <v-divider></v-divider>
 
-       <v-row no-gutters class="pa-1">
+       <v-row no-gutters class="pa-1 dialog-custom-row">
          <v-col cols="12">
            <v-form ref="newTitleForm" lazy-validation>
              <v-text-field v-model="newTitle" label="Suggest alternative title"
@@ -453,5 +453,9 @@ export default {
 
 .highlighted-row {
   background-color: #F9FBE7;
+}
+
+.dialog-custom-row {
+  flex: initial;
 }
 </style>
