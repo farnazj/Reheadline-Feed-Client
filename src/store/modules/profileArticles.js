@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import postServices from '@/services/postServices'
+import studyServices from '@/services/studyServices'
 
 export default {
   namespaced: true,
@@ -7,7 +7,7 @@ export default {
     username: '',
     articles: [],
     offset: 0,
-    limit: 10,
+    limit: 15,
   },
   mutations: {
 
@@ -27,11 +27,6 @@ export default {
       state.offset = 0;
     },
 
-    update_boost: (state, boost) => {
-      let index = state.articles.findIndex(article => article.id == boost.id);
-      Vue.set(state.articles, index, boost);
-    },
-
     remove_boost: (state, postId) => {
       let index = state.articles.findIndex(article => article.id == postId);
       state.articles.splice(index, 1);
@@ -43,16 +38,6 @@ export default {
       let articleCopy = Object.assign({}, state.articles[index]);
       articleCopy.StandaloneTitle = payload.standaloneTitle;
       Vue.set(state.articles, index, articleCopy);
-    },
-
-    add_or_remove_tag_in_filters: (state, payload) => {
-      if (payload.add)
-        state.filteredTags.push(payload.tag);
-      else {
-        let index = state.filteredTags.findIndex(tag => tag.id == payload.tag.id);
-        state.filteredTags.splice(index, 1);
-      }
-
     }
   },
   actions: {
@@ -64,26 +49,23 @@ export default {
     getArticles: (context) => {
 
       return new Promise((resolve, reject) => {
-
-        let headers = context.state.filteredTags.length ?
-        { tags: JSON.stringify(context.state.filteredTags.map(el => el.id)) } :
-        {};
-
-        postServices.getActivity({
-          username: context.state.username,
-          offset: context.state.offset,
-          limit: context.state.limit
-        }, headers)
+        studyServices.getAltTitlesFeed({
+          limit: context.state.limit,
+          offset: context.state.offset
+        }, {
+          username: context.state.username
+        })
         .then(response => {
           resolve(response.data);
-        }).catch(error => {
-          console.log('what is going on?', error)
-          reject(error)
         })
+        .catch(err => {
+          reject(error);
+        })
+       
       })
     },
 
-    getMoreBoosts: (context) => {
+    getMorePosts: (context) => {
 
       context.dispatch('loader/setLoading', true, { root: true });
       return new Promise((resolve, reject) => {
@@ -108,7 +90,7 @@ export default {
       context.commit('refresh_articles');
       return new Promise((resolve, reject) => {
 
-        context.dispatch('getMoreBoosts')
+        context.dispatch('getMorePosts')
         .then(() => {
           resolve();
         })
@@ -121,25 +103,6 @@ export default {
       })
     },
 
-    updateStateArticle: (context, payload) => {
-
-      return new Promise((resolve, reject) => {
-
-        postServices.getActivityByPostId(
-          {
-            postId: payload.postId,
-            username: context.state.username
-          })
-          .then(response => {
-            context.commit('update_boost', response.data);
-            resolve();
-          })
-          .catch(error => {
-            reject(error);
-          })
-      })
-    },
-
     removeArticle: (context, payload) => {
       context.commit('remove_boost', payload);
     },
@@ -149,21 +112,6 @@ export default {
     */
     updateTitles: (context, payload) => {
       context.commit('update_titles', payload)
-    },
-
-    addOrRemoveTagInFilters: (context, payload) => {
-      context.commit('add_or_remove_tag_in_filters', payload);
-      return new Promise((resolve, reject) => {
-
-        context.dispatch('refreshArticles')
-        .then(() => {
-          resolve();
-        })
-        .catch(err => {
-          reject(err);
-        })
-      })
-
     }
   }
 }

@@ -44,22 +44,12 @@
                    <div class="headline grey--text text--lighten-4" v-else>{{profileOwner.userName}}</div>
 
                   <div class="subheading grey--text text--lighten-2" v-if="!profileOwner.systemMade">({{profileOwner.userName}})</div>
-                  <div class="caption grey--text text--lighten-2 mt-2" v-if="profileOwner.systemMade && !profileOwner.SourceFeeds.length && profileOwner.isVerified">
-                    There is currently no RSS feed associated with this source. The posts on this page have been individually imported.
-                    You can add this source's feed to {{siteName}} by going to the Sources page <v-icon small color="grey grey--lighten-2">arrow_right_alt</v-icon> Add Feeds.
-                  </div>
                 </div>
               </v-card-title>
             </v-col>
 
             <v-col cols="3">
               <v-row v-if="notUser" justify="end" wrap no-gutters>
-                <v-btn :small="$vuetify.breakpoint.xsOnly" depressed @click="changeTrustStatus()"
-                :color="isTrusted ? 'grey lighten-1' : 'light-green lighten-1' " class="ma-1">
-                  <span v-if="!isTrusted">Trust</span>
-                  <span v-else>Untrust</span>
-                </v-btn>
-
                 <v-btn :small="$vuetify.breakpoint.xsOnly" depressed @click="changeFollowStatus()"
                 :color="isFollowed ? 'grey lighten-1' : 'blue lighten-1' " class="ma-1">
                   <span v-if="!isFollowed">Follow</span>
@@ -97,8 +87,8 @@
                 <custom-titles titlesNamespace="profileTitles" filtersNamespace="profileArticles"></custom-titles>
 
                 <v-col cols="7" class="ml-2">
-                  <article-holder detailsNamespace="profileArticleDetails" filtersNamespace="profileArticles"
-                  assessmentsNamespace="profileAssessments" titlesNamespace="profileTitles" :loadLocked="tabs != 'history'"></article-holder>
+                  <article-holder filtersNamespace="profileArticles"
+                   titlesNamespace="profileTitles" :loadLocked="tabs != 'history'"></article-holder>
                 </v-col>
 
               </v-row>
@@ -151,7 +141,6 @@ export default {
   created() {
     this.setUsername(this.username);
     this.fetchFollows();
-    this.fetchTrusteds()
     this.getUser();
     if (!Object.keys(this.userPreferences).length)
       this.getUserPreferences();
@@ -174,9 +163,6 @@ export default {
     isFollowed: function() {
       return utils.isFollowed(this.profileOwner);
     },
-    isTrusted: function() {
-      return utils.isTrusted(this.profileOwner);
-    },
     siteName: function() {
       return consts.SITE_NAME;
     },
@@ -184,7 +170,6 @@ export default {
       'user'
     ]),
     ...mapGetters('relatedSources', [
-      'trustedIds',
       'followedIds'
     ]),
     ...mapState('preferences', [
@@ -193,10 +178,6 @@ export default {
   },
   beforeRouteUpdate (to, from, next) {
     this.getUser();
-    next();
-  },
-  beforeRouteLeave (to, from, next) {
-    this.hideContainer();
     next();
   },
   methods: {
@@ -228,14 +209,6 @@ export default {
       })
 
     },
-    changeTrustStatus() {
-      let source = this.profileOwner;
-      if (!this.trustedIds.includes(source.id)) {
-        this.addTrusted({ username: source.userName });
-      }
-      else
-        this.deleteTrusted({ username: source.userName });
-    },
     changeFollowStatus() {
       let source = this.profileOwner;
       if (!this.followedIds.includes(source.id))
@@ -247,12 +220,9 @@ export default {
       'setUsername'
     ]),
     ...mapActions('relatedSources', [
-      'addTrusted',
-      'deleteTrusted',
       'follow',
       'unfollow',
-      'fetchFollows',
-      'fetchTrusteds'
+      'fetchFollows'
     ]),
     ...mapActions('auth', [
       'updateUser'
@@ -263,7 +233,6 @@ export default {
   },
   watch: {
     username: function(val) {
-      this.hideContainer();
       this.setUsername(val);
       this.getUser();
     }

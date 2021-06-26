@@ -1,7 +1,5 @@
 import Vue from 'vue'
-import postServices from '@/services/postServices'
 import studyServices from '@/services/studyServices'
-import consts from '@/services/constants'
 
 export default {
   namespaced: true,
@@ -25,11 +23,6 @@ export default {
     refresh_articles: (state) => {
       state.articles = [];
       state.offset = 0;
-    },
-
-    update_boost: (state, boost) => {
-      let index = state.articles.findIndex(article => article.id == boost.id);
-      Vue.set(state.articles, index, boost);
     },
 
     remove_boost: (state, postId) => {
@@ -109,48 +102,11 @@ export default {
       })
     },
 
-    removeArticle: (context, payload) => {
-      context.commit('remove_boost', payload);
-    },
-
-    getSingleArticle: (context, payload) => {
-      context.dispatch('loader/setLoading', true, { root: true });
-
-      context.commit('refresh_articles');
-      
-      return new Promise((resolve, reject) => {
-        postServices.getBoostByPostId({ postId: payload.postId })
-        .then((res) => {
-          context.commit('set_fetch_status', false);
-          context.commit('append_articles', [res.data]);
-          resolve();
-        })
-        .catch(error => {
-          reject(error);
-        })
-      })
-    },
-
     /*
     Called from fetchPostTitles in titles module
     */
     updateTitles: (context, payload) => {
       context.commit('update_titles', payload)
-    },
-
-    addOrRemoveTagInFilters: (context, payload) => {
-      context.commit('add_or_remove_tag_in_filters', payload);
-      return new Promise((resolve, reject) => {
-
-        context.dispatch('refreshArticles')
-        .then(() => {
-          resolve();
-        })
-        .catch(err => {
-          reject(err);
-        })
-      })
-
     }
 
   }

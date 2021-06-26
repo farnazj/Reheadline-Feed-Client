@@ -6,9 +6,10 @@ export default {
             withCredentials: true
         })
     },
-    getAltTitlesFeed(params) {
+    getAltTitlesFeed(params, headers) {
         return Api().get(`/alt-titles-feed/?limit=${params.limit}&offset=${params.offset}`, {
-            withCredentials: true
+            withCredentials: true,
+            headers: headers
         })
     },
     getStudyUsers(params) {
