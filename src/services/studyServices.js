@@ -15,5 +15,11 @@ export default {
         return Api().get(`/study-users/?limit=${params.limit}&offset=${params.offset}`, {
             withCredentials: true
         })
+    },
+    logUserInteraction(reqBody) {
+        return Api().post('/headline-study-log', reqBody, {
+            withCredentials: true
+        })
     }
+
 }

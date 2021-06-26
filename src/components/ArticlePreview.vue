@@ -49,7 +49,7 @@
 
           <v-row no-gutters class="mt-1" justify="center">
             <v-col cols="6">
-              <v-btn outlined color="blue darken-1" block small @click="logEvent( { type: 'article visit', data: post.url })"
+              <v-btn outlined color="blue darken-1" block small @click="logEvent( { type: 'visit_article', data: post.url })"
                 :href="post.url" target="_blank">
                  Visit Website</v-btn>
             </v-col>
@@ -124,7 +124,7 @@
       },
       showTitles: function() {
 
-        this.logEvent({ type: 'show_titles', data: this.post.StandaloneTitle.id });
+        this.logEvent({ type: 'show_titles_for_post', data: this.post.id });
         this.setPostTitleId({ postId: this.post.id, standaloneTitleId: this.post.StandaloneTitle ? this.post.StandaloneTitle.id : null });
         this.populateTitles(this.titleObjects);
         this.setTitlesVisibility(true);
