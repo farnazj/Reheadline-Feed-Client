@@ -70,6 +70,7 @@
 <script>
 import customAvatar from '@/components/CustomAvatar'
 import sourceHelpers from '@/mixins/sourceHelpers'
+import studyHelpers from '@/mixins/studyHelpers'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -96,17 +97,22 @@ export default {
   methods: {
     changeFollowStatus(source) {
 
-      if (!this.followedIds.includes(source.id))
+      if (!this.followedIds.includes(source.id)) {
+        this.logEvent({ type: 'follow', data: source.id });
         this.follow({ username: source.userName });
-      else
+      }
+      else {
+        this.logEvent({ type: 'unfollow', data: source.id });
         this.unfollow({ username: source.userName });
+      }
+        
     },
     ...mapActions('relatedSources', [
       'follow',
       'unfollow'
     ])
   },
-  mixins: [sourceHelpers]
+  mixins: [sourceHelpers, studyHelpers]
 
 }
 
