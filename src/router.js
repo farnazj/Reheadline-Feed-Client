@@ -27,7 +27,7 @@ let router = new Router({
       }
     },
     {
-      path: '/sources',
+      path: '/users',
       name: 'sources',
       component: Sources,
       meta: {
