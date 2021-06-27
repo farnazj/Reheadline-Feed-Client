@@ -13,7 +13,7 @@
   <v-row>
     <v-col cols="12">
 
-      <v-row v-for="article in articles" :key="article.id" no-gutters>
+      <v-row v-for="article in articles" :key="article.id" no-gutters class="mt-2">
         <article-preview :post="article" 
         :filtersNamespace="filtersNamespace"
         :titlesNamespace="titlesNamespace">

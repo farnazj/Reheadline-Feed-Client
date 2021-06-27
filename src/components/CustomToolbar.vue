@@ -2,7 +2,7 @@
     <v-app-bar dense fixed color="lime lighten-1">
 
       <v-toolbar-title @click="goToPage('Home')" class="headline text-uppercase interactable">
-        <span class="font-weight-light">Trustnet</span>
+        <span class="font-weight-light">Reheadline</span>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -16,7 +16,7 @@
                 <v-icon>fas fa-users</v-icon>
               </v-btn>
           </template>
-          <span>Sources</span>
+          <span>Users</span>
         </v-tooltip>
 
 

@@ -13,14 +13,14 @@
                   <v-img v-if="post.image" :src="post.image" contain class="rounded"> </v-img>
                 </v-col>
 
-                <v-col :cols="$vuetify.breakpoint.smAndDown ? 6 : 12" class="py-1">
+                <v-col :cols="$vuetify.breakpoint.smAndDown ? 6 : 12" :class="[$vuetify.breakpoint.smAndDown ? 'pl-2' : '' ,'py-1']">
                   <initiator-display :userId="post.SourceId" :postDate="post.publishedDate">
                   </initiator-display>
                 </v-col>
                 </v-row>
             </v-col>
 
-            <v-col :cols="$vuetify.breakpoint.smAndDown ? 12 : (defaultView ? 9: 10)">
+            <v-col :cols="$vuetify.breakpoint.smAndDown ? 12 : (defaultView ? 9 : 10)">
               <v-row no-gutters>
                 <v-col cols="12">
                    <div class="px-2">

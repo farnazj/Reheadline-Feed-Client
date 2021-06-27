@@ -108,7 +108,6 @@ export default {
   },
   watch: {
     titleEndorsersState: function(newVal) {
-      console.log(newVal)
     }
   },
   mixins: [timeHelpers, sourceHelpers]

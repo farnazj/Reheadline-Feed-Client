@@ -66,10 +66,8 @@ export default {
 
       authServices.verifyNewAccount({ token: this.token })
       .then(response => {
-        console.log('verify shod')
         studyServices.finishStudySignup({ token: this.token })
         .then(()=> {
-          console.log('sign up shod')
           this.type = 'info';
           this.alertMessage = response.data.message;
           this.alert = true;

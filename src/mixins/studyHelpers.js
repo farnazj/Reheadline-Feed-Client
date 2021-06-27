@@ -10,7 +10,7 @@ export default {
         console.log(log)
         studyServices.logUserInteraction(log)
         .then(res => {
-            console.log(res);
+            // console.log(res);
         })
     }
   }

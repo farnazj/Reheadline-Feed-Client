@@ -5,7 +5,7 @@
     <v-row class="pa-4" >
       <v-col :cols="$vuetify.breakpoint.smAndDown ? 12 : 6">
         <v-text-field
-          v-model="search" append-icon="search" label="Search sources you trust or follow"
+          v-model="search" append-icon="search" label="Search users you follow"
           single-line hide-details></v-text-field>
       </v-col>
     </v-row>

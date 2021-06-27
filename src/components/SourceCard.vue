@@ -38,9 +38,6 @@
           </v-col>
 
           <v-col cols="3" v-if="!$vuetify.breakpoint.smAndDown">
-            <v-row no-gutters justify="end" class="mb-0">
-              <span class="caption trusted-text" v-if="isTrusted"> Trusted &#x2713;</span>
-            </v-row>
 
             <v-row no-gutters justify="end">
               <span class="caption followed-text" v-if="isFollowed"> Followed &#x2713;</span>
@@ -56,13 +53,6 @@
         </v-row>
 
         <v-row v-else no-gutters align="end">
-
-          <v-btn x-small text :color="isTrusted ? 'grey darken-2' : 'light-green darken-3' "
-            @click.stop="changeTrustStatus(source)" :class="$vuetify.breakpoint.smAndDown ? 'custom-btn-text-sm' :'custom-btn-text' ">
-            <span v-if="isTrusted"> Untrust</span>
-            <span v-else> Trust</span>
-          </v-btn>
-
           <v-btn x-small text :color="isFollowed ? 'grey darken-2' : 'light-blue darken-4' "
             @click.stop="changeFollowStatus(source)" :class="$vuetify.breakpoint.smAndDown ? 'custom-btn-text-sm' :'custom-btn-text' ">
             <span v-if="isFollowed"> Unfollow</span>
@@ -100,19 +90,10 @@ export default {
   },
   computed: {
    ...mapGetters('relatedSources', [
-     'trustedIds',
      'followedIds'
    ])
   },
   methods: {
-    changeTrustStatus(source) {
-
-      if (!this.trustedIds.includes(source.id)) {
-        this.addTrusted({ username: source.userName });
-      }
-      else
-        this.deleteTrusted({ username: source.userName });
-    },
     changeFollowStatus(source) {
 
       if (!this.followedIds.includes(source.id))
@@ -121,8 +102,6 @@ export default {
         this.unfollow({ username: source.userName });
     },
     ...mapActions('relatedSources', [
-      'addTrusted',
-      'deleteTrusted',
       'follow',
       'unfollow'
     ])
@@ -134,10 +113,6 @@ export default {
 </script>
 
 <style scoped>
-
-.trusted-text {
-  color: #1B5E20;
-}
 
 .followed-text {
   color: #0D47A1;

@@ -76,7 +76,6 @@ export default {
           context.commit('auth_success');
           context.commit('update_user', user);
           context.dispatch('relatedSources/fetchFollows',{}, { root: true });
-          context.dispatch('relatedSources/fetchTrusteds',{}, { root: true });
           context.dispatch('relatedSources/fetchFollowers',{}, { root: true });
           context.dispatch('preferences/getUserPreferences', {}, { root: true });
 
@@ -93,7 +92,7 @@ export default {
 
       return new Promise((resolve, reject) => {
         commit('auth_request');
-        authServices.signup(user)
+        authServices.signup({...user, headlineExp: true })
         .then(resp => {
           console.log('shod')
           resolve(resp);

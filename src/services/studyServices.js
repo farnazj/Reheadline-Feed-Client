@@ -7,14 +7,15 @@ export default {
         })
     },
     getAltTitlesFeed(params, headers) {
-        return Api().get(`/alt-titles-feed/?limit=${params.limit}&offset=${params.offset}`, {
+        return Api().get(`/alt-titles-feed?limit=${params.limit}&offset=${params.offset}`, {
             withCredentials: true,
             headers: headers
         })
     },
-    getStudyUsers(params) {
-        return Api().get(`/study-users/?limit=${params.limit}&offset=${params.offset}`, {
-            withCredentials: true
+    getStudyUsers(params, headers) {
+        return Api().get(`/study-users?limit=${params.limit}&offset=${params.offset}`, {
+            withCredentials: true,
+            headers: headers
         })
     },
     logUserInteraction(reqBody) {

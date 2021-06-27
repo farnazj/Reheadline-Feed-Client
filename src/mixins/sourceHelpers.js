@@ -25,9 +25,6 @@ export default {
     }
   },
   computed: {
-    isTrusted: function() {
-      return utils.isTrusted(this.source);
-    },
     isFollowed: function() {
       return utils.isFollowed(this.source);
     }

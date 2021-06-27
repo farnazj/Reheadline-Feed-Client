@@ -8,11 +8,11 @@
         <v-tabs centered dark background-color="grey darken-3" height=36
           slider-color="lime lighten-4" v-model="tabs" @change="tabChanged">
           <v-tab href="#manage" >
-            Manage your sources
+            Following
           </v-tab>
 
           <v-tab href="#discover">
-            Discover sources
+            Discover users
           </v-tab>
 
         </v-tabs>
@@ -40,7 +40,6 @@
 import CustomToolbar from '@/components/CustomToolbar'
 import ManageSources from '@/components/ManageSources'
 import DiscoverSources from '@/components/DiscoverSources'
-import sourceCard from '@/components/SourceCard'
 // import Loading from '@/components/Loading'
 
 import { mapGetters, mapActions } from 'vuex';
@@ -49,9 +48,8 @@ export default {
   components: {
     'custom-toolbar': CustomToolbar,
     'manage-sources': ManageSources,
-    'discover-sources': DiscoverSources,
+    'discover-sources': DiscoverSources
     // 'loading': Loading,
-    'source-card': sourceCard
   },
   data () {
     return {

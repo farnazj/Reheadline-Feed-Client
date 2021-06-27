@@ -83,7 +83,7 @@
         <v-tabs-items v-model="tabs" class="parent-height">
           <v-tab-item value="history">
             <v-container fluid class="px-0">
-              <v-row no-gutters>
+              <v-row no-gutters justify="center">
                 <custom-titles titlesNamespace="profileTitles" filtersNamespace="profileArticles"></custom-titles>
 
                 <v-col cols="7" class="ml-2">

@@ -4,7 +4,7 @@
       <v-row class="pa-4">
         <v-col :cols="$vuetify.breakpoint.smAndDown ? 12 : 6">
           <v-text-field
-            v-model="search" append-icon="search" label="Search sources you do not follow yet"
+            v-model="search" append-icon="search" label="Search users you do not follow yet"
             single-line hide-details></v-text-field>
         </v-col>
       </v-row>
@@ -32,7 +32,7 @@
 
 <script>
 import sourceCard from '@/components/SourceCard'
-import sourceServices from '@/services/sourceServices'
+import studyServices from '@/services/studyServices'
 import loadMore from '@/mixins/loadMore'
 import { mapGetters } from 'vuex'
 
@@ -50,14 +50,13 @@ export default {
   },
   methods: {
     querySources: function() {
-      return sourceServices.getSources(
+      return studyServices.getStudyUsers(
         {
           limit: this.limit,
           offset: this.offset
         },
         {
           searchterm: this.search,
-          followconstraint: 'not followed'
         }
       )
     },
@@ -68,13 +67,7 @@ export default {
     }
   },
   computed: {
-    // sourcesToFollow: function() {
-    //   let authUserId = this.$store.getters['auth/user'].id;
-    //   let filtered_sources = this.sourceResults.filter(source => (!this.followedIds.includes(source.id)
-    //     && source.id != authUserId));
-    //
-    //   return filtered_sources;
-    // },
+
     ...mapGetters('relatedSources', [
       'followedIds',
       'trustedIds',
