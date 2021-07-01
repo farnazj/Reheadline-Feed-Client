@@ -24,11 +24,12 @@
               <v-row no-gutters>
                 <v-col cols="12">
                    <div class="px-2">
+                     <span v-if="displayedAlternativeTitle" class="mx-1 font-italic font-weight-light interactable title title-custom alt-title"
+                     >{{displayedAlternativeTitle}}</span>
+
                      <p :class="['mr-1', 'interactable', $vuetify.breakpoint.smAndDown ? 'title-custom-small': 'title-custom',
                       { strikethrough: displayedAlternativeTitle, 'title': $vuetify.breakpoint.smAndDown }]"
                      v-html="post.title"></p>
-                     <span v-if="displayedAlternativeTitle" class="mx-1 font-italic font-weight-light interactable title title-custom"
-                     >{{displayedAlternativeTitle}}</span>
 
                        <v-tooltip bottom>
                          <template v-slot:activator="{ on }">
@@ -156,14 +157,18 @@
 
 .title-custom {
   line-height: 1.5rem;
-  font-size: 1.1rem !important;
+  font-size: 0.9rem !important;
   display: inline !important;
 }
 
 .title-custom-small {
   line-height: 1em;
-  font-size: 1em !important;
+  font-size: 0.8em !important;
   display: inline !important;
+}
+
+.alt-title {
+  font-size: 1.1rem !important;
 }
 /* 
 .assessment-handle {
