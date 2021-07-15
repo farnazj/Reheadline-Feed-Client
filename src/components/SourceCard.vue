@@ -98,11 +98,11 @@ export default {
     changeFollowStatus(source) {
 
       if (!this.followedIds.includes(source.id)) {
-        this.logEvent({ type: 'follow', data: source.id });
+        this.logEvent({ type: 'follow', data: source.id,client: 'feed-client' });
         this.follow({ username: source.userName });
       }
       else {
-        this.logEvent({ type: 'unfollow', data: source.id });
+        this.logEvent({ type: 'unfollow', data: source.id, client: 'feed-client' });
         this.unfollow({ username: source.userName });
       }
         

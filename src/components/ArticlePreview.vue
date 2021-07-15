@@ -50,7 +50,14 @@
 
           <v-row no-gutters class="mt-1" justify="center">
             <v-col cols="6">
-              <v-btn outlined color="blue darken-1" block small @click="logEvent( { type: 'visit_article', data: post.url })"
+              <v-btn outlined color="blue darken-1" block small @click="logEvent( { 
+                type: 'visit_article', 
+                data: { 
+                  target: post.url,
+                  source: window.location.href
+                },
+                  client: 'feed-client'
+                })"
                 :href="post.url" target="_blank">
                  Visit Website</v-btn>
             </v-col>
