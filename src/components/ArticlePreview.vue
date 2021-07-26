@@ -24,21 +24,21 @@
               <v-row no-gutters>
                 <v-col cols="12">
                    <div class="px-2">
-                     <span v-if="displayedAlternativeTitle" class="mx-1 font-italic font-weight-light interactable title title-custom alt-title"
+                     <span v-if="displayedAlternativeTitle" class="mx-1 font-italic font-weight-light title title-custom alt-title"
                      >{{displayedAlternativeTitle}}</span>
 
-                     <p :class="['mr-1', 'interactable', $vuetify.breakpoint.smAndDown ? 'title-custom-small': 'title-custom',
+                     <p :class="['mr-1', $vuetify.breakpoint.smAndDown ? 'title-custom-small': 'title-custom',
                       { strikethrough: displayedAlternativeTitle, 'title': $vuetify.breakpoint.smAndDown }]"
                      v-html="post.title"></p>
 
-                       <v-tooltip bottom>
-                         <template v-slot:activator="{ on }">
-                           <v-btn v-on="on" @click.stop="showTitles" class='ml-0' small icon color="lime lighten-1">
-                             <v-icon class="xs-icon-font">edit</v-icon>
-                           </v-btn>
-                         </template>
-                         <span>alternative titles</span>
-                       </v-tooltip>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <v-btn v-on="on" @click.stop="showTitles" class='ml-0' small icon color="lime lighten-1">
+                            <v-icon class="xs-icon-font">edit</v-icon>
+                          </v-btn>
+                        </template>
+                        <span>alternative titles</span>
+                      </v-tooltip>
                      <p v-if="!$vuetify.breakpoint.xsOnly && defaultView" :class="['mt-1', 'mb-0', 'grey--text', 'text--darken-3', 'body-2', {'caption': $vuetify.breakpoint.smAndDown}]" 
                      v-html="post.description"></p>
                    </div>
@@ -54,9 +54,8 @@
                 type: 'visit_article', 
                 data: { 
                   target: post.url,
-                  source: window.location.href
-                },
-                  client: 'feed-client'
+                  source: clientURL
+                }
                 })"
                 :href="post.url" target="_blank">
                  Visit Website</v-btn>
@@ -75,6 +74,7 @@
   import initiatorDisplay from '@/components/InitiatorDisplay'
   import titleHelpers from '@/mixins/titleHelpers'
   import studyHelpers from '@/mixins/studyHelpers'
+  import constants from '@/services/constants'
   import { mapState } from 'vuex'
 
   export default {
@@ -102,6 +102,9 @@
     computed: {
       defaultView: function() {
         return typeof this.userPreferences.articlePreviewTheme === 'undefined' || this.userPreferences.articlePreviewTheme === 'default';
+      },
+      clientURL: function() {
+        return constants.SERVED_CLIENT_URL;
       },
       ...mapState('preferences', [
         'userPreferences'
@@ -132,7 +135,13 @@
       },
       showTitles: function() {
 
-        this.logEvent({ type: 'show_titles_for_post', data: this.post.id });
+this.logEvent({ type: 'show_titles_for_post', data: {
+            postId: this.post.id,
+            standaloneTitleId: this.post.StandaloneTitle ? this.post.StandaloneTitle.id : null,
+            standaloneTitleText: this.post.StandaloneTitle ? this.post.StandaloneTitle.text: null,
+            displayedCustomTitle: this.post.StandaloneTitle ? this.displayedAlternativeTitle : null
+          }
+        });
         this.setPostTitleId({ postId: this.post.id, standaloneTitleId: this.post.StandaloneTitle ? this.post.StandaloneTitle.id : null });
         this.populateTitles(this.titleObjects);
         this.setTitlesVisibility(true);

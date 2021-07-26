@@ -8,7 +8,7 @@ export default {
   methods: {
     logEvent: function(log) {
         console.log(log)
-        studyServices.logUserInteraction(log)
+        studyServices.logUserInteraction({...log, client: 'feed-client'})
         .then(res => {
             // console.log(res);
         })
