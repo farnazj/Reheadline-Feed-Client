@@ -135,7 +135,7 @@
       },
       showTitles: function() {
 
-this.logEvent({ type: 'show_titles_for_post', data: {
+      this.logEvent({ type: 'show_titles_for_post', data: {
             postId: this.post.id,
             standaloneTitleId: this.post.StandaloneTitle ? this.post.StandaloneTitle.id : null,
             standaloneTitleText: this.post.StandaloneTitle ? this.post.StandaloneTitle.text: null,

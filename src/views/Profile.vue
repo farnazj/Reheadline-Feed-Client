@@ -116,6 +116,7 @@ import photoUpload from 'vue-image-crop-upload'
 
 import sourceServices from '@/services/sourceServices'
 import sourceHelpers from '@/mixins/sourceHelpers'
+import studyHelpers from '@/mixins/studyHelpers'
 import consts from '@/services/constants'
 import utils from '@/services/utils'
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -211,10 +212,15 @@ export default {
     },
     changeFollowStatus() {
       let source = this.profileOwner;
-      if (!this.followedIds.includes(source.id))
+      if (!this.followedIds.includes(source.id)) {
+        this.logEvent({ type: 'follow', data: source.id });
         this.follow({ username: source.userName });
-      else
+      }
+      else {
+        this.logEvent({ type: 'unfollow', data: source.id });
         this.unfollow({ username: source.userName });
+      }
+        
     },
     ...mapActions('profileArticles', [
       'setUsername'
@@ -237,7 +243,7 @@ export default {
       this.getUser();
     }
   },
-  mixins: [sourceHelpers]
+  mixins: [sourceHelpers, studyHelpers]
 
 }
 </script>
