@@ -9,9 +9,6 @@ export default {
     limit: 15,
     articlesFetched: false
   },
-  getters: {
-
-  },
   mutations: {
     append_articles: (state, posts) => {
       let articleIds = state.articles.map(article => article.id);

@@ -9,6 +9,11 @@ export default {
     offset: 0,
     limit: 15,
   },
+  getters: {
+    profileUsername: (state) => {
+      return state.username;
+    }
+  },
   mutations: {
 
     set_username: (state, username) => {

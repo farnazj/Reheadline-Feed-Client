@@ -124,10 +124,18 @@ function compareBoosters(a, b) {
   }
 }
 
-function compareTitles(a, b) {
-  let authUserId = store.getters['auth/user'].id;
 
-  if (a.author.id == authUserId && b.author.id != authUserId)
+
+function compareTitles(a, b) {
+
+  let authUserId = store.getters['auth/user'].id;
+  let profileUsername = store.getters['profileArticles/profileUsername'];
+
+  if (a.author.userName == profileUsername && b.author.userName != profileUsername)
+    return -1;
+  else if (a.author.userName != profileUsername && b.author.userName == profileUsername)
+    return 1;
+  else if (a.author.id == authUserId && b.author.id != authUserId)
     return -1;
   else if (b.author.id == authUserId && !a.author.id == authUserId )
     return 1;
