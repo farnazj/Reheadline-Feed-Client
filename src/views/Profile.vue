@@ -86,7 +86,7 @@
               <v-row no-gutters justify="center">
                 <custom-titles titlesNamespace="profileTitles" filtersNamespace="profileArticles"></custom-titles>
 
-                <v-col cols="7" class="ml-2">
+                <v-col cols="11" md="7" class="ml-2">
                   <article-holder filtersNamespace="profileArticles"
                    titlesNamespace="profileTitles" :loadLocked="tabs != 'history'"></article-holder>
                 </v-col>

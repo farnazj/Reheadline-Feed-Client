@@ -5,7 +5,7 @@
     <v-row no-gutters justify="center">
       <custom-titles titlesNamespace="homeTitles" filtersNamespace="homeArticles"></custom-titles>
 
-      <v-col md="7" cols="8">
+      <v-col md="7" cols="11">
         <article-holder detailsNamespace="homeArticleDetails" filtersNamespace="homeArticles"
            titlesNamespace="homeTitles" :class="{'pt-5': !$vuetify.breakpoint.smAndDown}">
        </article-holder>
