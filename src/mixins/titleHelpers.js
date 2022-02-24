@@ -25,11 +25,27 @@ export default {
     postId: function() {
       return this.state.postId;
     },
-    standaloneTitleId: function() {
-      return this.state.standaloneTitleId;
+    standaloneTitleIds: function() {
+      return this.state.standaloneTitleIds;
     },
     customTitlesVisible: function() {
       return this.state.customTitlesVisible;
+    },
+    uniqueCustomTitles: function() {
+      let customTitles = this.post.PostStandAloneTitles.length ? this.post.PostStandAloneTitles.map(standaloneTitle => 
+        standaloneTitle.StandaloneCustomTitles) : [];
+
+      let uniqueCustomTitlesSeen = [];
+      let uniqueCustomTitles = [];
+
+      let allCustomTitles = customTitles.flat();
+      for (let customTitle of allCustomTitles) {
+        if (!(customTitle.id in uniqueCustomTitlesSeen)) {
+            uniqueCustomTitlesSeen.push(customTitle.id);
+            uniqueCustomTitles.push(customTitle);
+        } 
+      }
+      return uniqueCustomTitles
     },
     ...mapState({
        state (state) {
@@ -84,11 +100,11 @@ export default {
     },
 
     ...mapActions({
-      setPostTitleId(dispatch, payload) {
-        return dispatch(this.titlesNamespace + '/setPostTitleId', payload)
+      setPostTitleIds(dispatch, payload) {
+        return dispatch(this.titlesNamespace + '/setPostTitleIds', payload)
       },
-      setTitleId(dispatch, payload) {
-        return dispatch(this.titlesNamespace + '/setTitleId', payload)
+      setTitleIds(dispatch, payload) {
+        return dispatch(this.titlesNamespace + '/setTitleIds', payload)
       },
       populateTitles(dispatch, payload) {
         return dispatch(this.titlesNamespace + '/populateTitles', payload)

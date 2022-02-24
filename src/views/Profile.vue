@@ -116,7 +116,7 @@ import photoUpload from 'vue-image-crop-upload'
 
 import sourceServices from '@/services/sourceServices'
 import sourceHelpers from '@/mixins/sourceHelpers'
-import studyHelpers from '@/mixins/studyHelpers'
+import logHelpers from '@/mixins/logHelpers'
 import consts from '@/services/constants'
 import utils from '@/services/utils'
 import { mapState, mapGetters, mapActions } from 'vuex'
@@ -243,7 +243,7 @@ export default {
       this.getUser();
     }
   },
-  mixins: [sourceHelpers, studyHelpers]
+  mixins: [sourceHelpers, logHelpers]
 
 }
 </script>

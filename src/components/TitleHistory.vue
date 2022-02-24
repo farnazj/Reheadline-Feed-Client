@@ -2,7 +2,7 @@
 
 <v-slide-x-reverse-transition v-if="visible">
   <v-card max-width="240" max-height='50vh' class="drawer-card">
-    <v-row no-gutters class="full-height">
+    <v-row no-gutters>
        <v-col class="drawer-opener interactable" cols="1" @click="hideHistory">
         <v-row no-gutters justify="end" align="center" class="fill-height">
           <v-icon @click="hideHistory">{{icons.arrowRight}}</v-icon>

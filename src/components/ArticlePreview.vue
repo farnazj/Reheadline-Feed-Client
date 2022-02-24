@@ -73,7 +73,7 @@
 <script>
   import initiatorDisplay from '@/components/InitiatorDisplay'
   import titleHelpers from '@/mixins/titleHelpers'
-  import studyHelpers from '@/mixins/studyHelpers'
+  import logHelpers from '@/mixins/logHelpers'
   import constants from '@/services/constants'
   import { mapState } from 'vuex'
 
@@ -117,10 +117,12 @@
 
         return new Promise((resolve, reject) => {
 
-          this.setPostTitleId({ postId: this.post.id, standaloneTitleId: this.post.StandaloneTitle ? this.post.StandaloneTitle.id : null });
-          let customTitles = this.post.StandaloneTitle ? this.post.StandaloneTitle.StandaloneCustomTitles : [];
+           this.setPostTitleIds({ postId: this.post.id, standaloneTitleIds: this.post.PostStandAloneTitles.length ? 
+            this.post.PostStandAloneTitles.map(standaloneTitle => standaloneTitle.id) : [] });
+          
+          let uniqueCustomTitles = this.uniqueCustomTitles;
 
-          return this.arrangeCustomTitles(customTitles) //in titleHelpers mixin
+          return this.arrangeCustomTitles(uniqueCustomTitles) //in titleHelpers mixin
           .then(res => {
             if (this.sortedTitles.length) {
               this.displayedAlternativeTitle = this.sortedTitles[0]['lastVersion'].text;
@@ -128,21 +130,24 @@
             else {
               this.displayedAlternativeTitle = null;
             }
-
             resolve();
           })
         })
       },
       showTitles: function() {
 
-      this.logEvent({ type: 'show_titles_for_post', data: {
+        this.logEvent({ type: 'show_titles_for_post', data: {
             postId: this.post.id,
-            standaloneTitleId: this.post.StandaloneTitle ? this.post.StandaloneTitle.id : null,
-            standaloneTitleText: this.post.StandaloneTitle ? this.post.StandaloneTitle.text: null,
-            displayedCustomTitle: this.post.StandaloneTitle ? this.displayedAlternativeTitle : null
+            standaloneTitleIds: this.post.PostStandAloneTitles.length ? 
+              this.post.PostStandAloneTitles.map(standaloneTitle => standaloneTitle.id) : [],
+            originalTitleText: this.post.title,
+            displayedCustomTitle: this.post.PostStandAloneTitles.length ? this.displayedAlternativeTitle : null,
+            availableCustomTitleIds: this.uniqueCustomTitles.map(el => el.id)
           }
         });
-        this.setPostTitleId({ postId: this.post.id, standaloneTitleId: this.post.StandaloneTitle ? this.post.StandaloneTitle.id : null });
+
+        this.setPostTitleIds({ postId: this.post.id, standaloneTitleIds: this.post.PostStandAloneTitles.length ? 
+          this.post.PostStandAloneTitles.map(standaloneTitle => standaloneTitle.id) : [] });
         this.populateTitles(this.titleObjects);
         this.setTitlesVisibility(true);
       }, 
@@ -160,7 +165,7 @@
         this.populateTitles(this.titleObjects);
       }
     }, 
-    mixins: [titleHelpers, studyHelpers]
+    mixins: [titleHelpers, logHelpers]
 
 }
 </script>

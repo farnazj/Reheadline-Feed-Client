@@ -73,9 +73,14 @@ export default {
       }
     },
     endorserUsers: function() {
-      let endorsers = this.titles.find(
+      let titlesForTheSelectedSet = this.titles.find(
         customTitle => customTitle.lastVersion.setId === this.selectedCustomTitleSetId
-      ).sortedEndorsers;
+      );
+
+      let endorsers = [];
+
+      if (titlesForTheSelectedSet)
+        endorsers = titlesForTheSelectedSet.sortedEndorsers;
 
       return endorsers;
     },

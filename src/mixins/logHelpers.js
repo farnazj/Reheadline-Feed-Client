@@ -7,8 +7,7 @@ export default {
   },
   methods: {
     logEvent: function(log) {
-        console.log(log)
-        studyServices.logUserInteraction({...log, client: 'feed-client'})
+        studyServices.logUserInteraction({...log, client: 'reheadline-feed-client'})
         .then(res => {
             // console.log(res);
         })

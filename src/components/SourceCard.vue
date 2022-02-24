@@ -70,7 +70,7 @@
 <script>
 import customAvatar from '@/components/CustomAvatar'
 import sourceHelpers from '@/mixins/sourceHelpers'
-import studyHelpers from '@/mixins/studyHelpers'
+import logHelpers from '@/mixins/logHelpers'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -112,7 +112,7 @@ export default {
       'unfollow'
     ])
   },
-  mixins: [sourceHelpers, studyHelpers]
+  mixins: [sourceHelpers, logHelpers]
 
 }
 
