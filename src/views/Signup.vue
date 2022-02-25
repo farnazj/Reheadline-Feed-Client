@@ -54,6 +54,19 @@
                 </v-text-field>
               </v-row>
 
+              <v-row no-gutters class="pt-5">
+                <p class="body-2 mb-0">{{siteName}} is a research platform intended to help people navigate their social information space.
+                  Do you give us your consent to use your data in our research analyses and subsequent publications?
+                </p>
+                <v-radio-group v-model="user.consent" required :rules="formRules.consentRules" class="mt-1">
+                  <v-radio label="Yes" value="true"></v-radio>
+                  <v-radio label="No" value="false"></v-radio>
+                </v-radio-group>
+                
+                <span class="caption">You can withdraw your consent later should you wish by visiting the Settings page of the website.</span>
+              </v-row>
+
+
             </v-container>
 
             <v-row no-gutters justify="center">
@@ -87,6 +100,7 @@
 
 <script>
 import customToolbar from '@/components/CustomToolbar'
+import consts from '@/services/constants'
 
 export default {
   components: {
@@ -100,7 +114,7 @@ export default {
         username : "",
         email: "",
         password : "",
-        type: 'info'
+        consent: null
       },
       match: "",
       formRules: {
@@ -119,12 +133,20 @@ export default {
         passwordRules: [
           v => (!!v && v) === this.match ||
              'Values do not match'
+        ],
+        consentRules: [
+          v => !!v || 'Please tell us whether you would like to consent.',
         ]
       },
       alert: false,
       alertMessage: '',
       type: 'info',
       buttonDisabled: false
+    }
+  },
+  computed: {
+    siteName: function() {
+      return consts.SITE_NAME;
     }
   },
   methods: {
@@ -149,7 +171,7 @@ export default {
     goToLogin: function() {
       this.$router.push({ name: 'login' });
     },
-    validateField () {
+    validateField() {
         this.$refs.signupForm.validate()
     }
   },

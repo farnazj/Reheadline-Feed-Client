@@ -63,19 +63,40 @@ export default {
     },
     verify: function() {
       this.setLoading(true);
+      let verifyCall;
+      if (this.$route.path.indexOf('/verify-new-account/') != -1)
+        verifyCall = authServices.verifyNewAccount;
+      else
+        verifyCall = authServices.verifyExistingAccount;
 
-      authServices.verifyNewAccount({ token: this.token })
+      verifyCall({ token: this.token })
       .then(response => {
-        studyServices.finishStudySignup({ token: this.token })
-        .then(()=> {
+
+        let prom;
+        if (this.mode == 'user-study')
+          prom = studyServices.finishStudySignup({ token: this.token });
+        else
+          prom = new Promise((resolve) => { resolve(); })
+
+        prom.then(() => {
           this.type = 'info';
           this.alertMessage = response.data.message;
           this.alert = true;
           this.loginVisible = true;
         })
+      // authServices.verifyNewAccount({ token: this.token })
+      // .then(response => {
+      //   studyServices.finishStudySignup({ token: this.token })
+      //   .then(()=> {
+      //     this.type = 'info';
+      //     this.alertMessage = response.data.message;
+      //     this.alert = true;
+      //     this.loginVisible = true;
+      //   })
     
       })
       .catch(err => {
+        console.log(err, 'pas chi shod')
         this.alertMessage = err.response.data.message;
         this.type = 'error';
         this.alert = true;

@@ -7,6 +7,7 @@ import relatedSources from './modules/relatedSources'
 import profileArticles from './modules/profileArticles'
 import preferences from './modules/preferences'
 import loader from './modules/loader'
+import consent from './modules/consent'
 
 Vue.use(Vuex)
 
@@ -29,7 +30,8 @@ let store = new Vuex.Store({
     relatedSources,
     profileArticles, //articles on a profile
     loader,
-    preferences
+    preferences,
+    consent
   }
 })
 
