@@ -144,6 +144,10 @@ export default {
       buttonDisabled: false
     }
   },
+  props: ['mode'],
+  created() {
+    console.log('what is mode', this.mode)
+  },
   computed: {
     siteName: function() {
       return consts.SITE_NAME;
@@ -154,7 +158,13 @@ export default {
 
       if (this.$refs.signupForm.validate()) {
 
-        this.$store.dispatch('auth/signup', this.user)
+        let data = this.user;
+        if (this.mode == 'user-study')
+          data.userStudy = true;
+
+        console.log('what data are we sending', this.mode, data)
+
+        this.$store.dispatch('auth/signup', data)
         .then(response => {
           this.type = 'info';
           this.alertMessage = response.data.message;

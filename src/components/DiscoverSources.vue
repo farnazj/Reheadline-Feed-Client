@@ -32,7 +32,7 @@
 
 <script>
 import sourceCard from '@/components/SourceCard'
-import studyServices from '@/services/studyServices'
+import sourceServices from '@/services/sourceServices'
 import loadMore from '@/mixins/loadMore'
 import { mapGetters } from 'vuex'
 
@@ -50,13 +50,16 @@ export default {
   },
   methods: {
     querySources: function() {
-      return studyServices.getStudyUsers(
+      //return studyServices.getStudyUsers
+      return sourceServices.getSources(
         {
           limit: this.limit,
           offset: this.offset
         },
         {
           searchterm: this.search,
+          followconstraint: 'not followed',
+          individual: 'true'
         }
       )
     },

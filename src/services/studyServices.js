@@ -1,8 +1,13 @@
 import Api from './api'
 
 export default {
+    // finishStudySignup(params) {
+    //     return Api().post(`/finish-alt-title-signup/${params.token}`, {}, {
+    //         withCredentials: true
+    //     })
+    // },
     finishStudySignup(params) {
-        return Api().post(`/finish-alt-title-signup/${params.token}`, {}, {
+        return Api().post(`/finish-user-study-signup/${params.token}`, {}, {
             withCredentials: true
         })
     },

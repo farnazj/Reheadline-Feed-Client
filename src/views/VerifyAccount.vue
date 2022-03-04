@@ -45,7 +45,7 @@ export default {
     'custom-toolbar': customToolbar,
     'loading': generalLoading
   },
-  props: ['token'],
+  props: ['token', 'mode'],
   data(){
     return {
       type: 'info',
